@@ -8,6 +8,10 @@ data.minute<-data.minute.read[,-1]
 ##par(mflow=c(2,1))
 ## detemine
 
+
+
+
+
 data<-data.minute$minute.end
 plot(data,type="l")
 
