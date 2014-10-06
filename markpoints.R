@@ -52,7 +52,7 @@ pos.pre<-pos.r[pos.r>100]
 rpoint.diff<-diff(data[pos.r])#????֮???ļ۲?
 rpoint.diff<-rpoint.diff[pos.r>100]#????100֮???ĵ?
 rpoint.diff<-rpoint.diff[c(-length(rpoint.diff))]#ȥ????????һ??????why?
-number.blue=range.pre=number.blue.in.red=number.red=slope<-rep(NA,length(pos.pre))
+number.blue=range.pre=number.blue.in.red=number.red=slope=max.datapre=min.datapre=adj.r.squared<-rep(NA,length(pos.pre))
 
 for(i in 1:length(rpoint.diff)){
   data.pre<-data[(pos.pre[i]-pre):(pos.pre[i]-1)]
@@ -61,9 +61,13 @@ for(i in 1:length(rpoint.diff)){
   #compute number of bule points between two red points
   number.blue.in.red[i]<-sum(as.numeric(pos.b[pos.b<pos.pre[i+1]]>pos.pre[i]-1))
   number.red[i]<-sum(as.numeric(pos.r[pos.r<pos.pre[i]]>pos.pre[i]-pre-1))
-  fit<-lm(data.pre~c(1:100))
+  max.datapre[i]<-max(data.pre)-data[pos.pre[i]]
+  min.datapre[i]<-min(data.pre)-data[pos.pre[i]]
+  fit<-lm(data.pre~c(1:pre))
   slope[i]<-as.numeric(fit$coefficients[2])
-  
+  adj.r.squared[i]<-summary(fit)$adj.r.squared
+  plot(c(1:pre),data.pre)
+  abline(fit)
   
 }
 pre.red.timedif<-diff(pos.r)
