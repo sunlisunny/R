@@ -52,11 +52,8 @@ pos.pre<-pos.r[pos.r>100]
 rpoint.diff<-diff(data[pos.r])#????֮???ļ۲?
 rpoint.diff<-rpoint.diff[pos.r>100]#????100֮???ĵ?
 rpoint.diff<-rpoint.diff[c(-length(rpoint.diff))]#ȥ????????һ??????why?
-number.blue<-rep(NA,length(pos.pre))
-range.pre<-rep(NA,length(pos.pre))
-number.blue.in.red<-rep(NA,length(pos.pre))
-number.red<-rep(NA,length(pos.pre))
-slope<-rep(NA,length(pos.pre))
+number.blue=range.pre=number.blue.in.red=number.red=slope<-rep(NA,length(pos.pre))
+
 for(i in 1:length(rpoint.diff)){
   data.pre<-data[(pos.pre[i]-pre):(pos.pre[i]-1)]
   range.pre[i]<-max(data.pre)-min(data.pre)
@@ -74,12 +71,15 @@ pre.red.timedif<-diff(pos.r)
 need<-rep(NA,length(pos.pre))
 for(i in 1:(length(pos.pre)-1)){
   need[i]<-0
-  if(abs(rpoint.diff[i])>10) 	##ɸѡ????price.dif>10
+  if(abs(rpoint.diff[i])>10) 	##choose red points price.dif>10
     need[i]<-1
 }
 need[length(need)]<-0
 
+## output the numbers
 output<-data.frame(number.blue=number.blue[need==1],range.pre=range.pre[need==1],number.blue.in.red=number.blue.in.red[need==1],number.red=number.red[need==1],pre.red.timedif=pre.red.timedif[need==1],slope=slope[need==1])
+
+
 
 #pos.pre[need==1]
 write.csv(output,file="markpoints.csv")
